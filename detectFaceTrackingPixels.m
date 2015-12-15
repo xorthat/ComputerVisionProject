@@ -3,7 +3,7 @@ violaJonesDetector = vision.CascadeObjectDetector;
 bbox = step(violaJonesDetector, frame);
 %if there are multiple faces, find the biggest one
 if size(bbox, 2) > 1
-    [~, ind] = max(bbox(:,3) * bbox(:,4));
+    [~, ind] = max(bbox(:,3) .* bbox(:,4));
     bbox = bbox(ind, :);
     violaBox = bbox;
 end

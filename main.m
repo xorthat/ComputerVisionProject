@@ -1,9 +1,9 @@
 clear;
 close all;
 dataDir = './data';
-vid = VideoReader([dataDir '/movie2.mov']);
+vid = VideoReader([dataDir '/movie2-68.mov']);
 frameRate = vid.FrameRate;
-secLength = 10;
+secLength = 20;
 targetHz = frameRate;
 earlyInd = 1;
 
@@ -73,31 +73,10 @@ covarY = 1/T.*(dataOut(:,ind)-repmat(meanY,1,numel(ind)))*...
 [V,D] = eig(covarY);
 
 s1 = dataOut'*V(:,1);
-[pxx,f] = periodogram(s1,[],[], frameRate);
-[y,i] = max(pxx);
-pulse1 = 60 / f(i);
-% [f, P1_1, periodicity, pulse1] = calculateSSAmplitudeSpectrum(s1, frameRate, secLength);
-
 s2 = dataOut'*V(:,2);
-[pxx,f] = periodogram(s2,[],[], frameRate);
-[y,i] = max(pxx);
-pulse2 = 60 / f(i);
-% [f, P1_2, periodicity, pulse2] = calculateSSAmplitudeSpectrum(s2, frameRate, secLength);
- 
 s3 = dataOut'*V(:,3);
-[pxx,f] = periodogram(s3,[],[], frameRate);
-[y,i] = max(pxx);
-pulse3 = 60 / f(i);
-% [f, P1_3, periodicity, pulse3] = calculateSSAmplitudeSpectrum(s3, frameRate, secLength);
-
 s4 = dataOut'*V(:,4);
-[pxx,f] = periodogram(s4,[],[], frameRate);
-[y,i] = max(pxx);
-pulse4 = 60 / f(i);
-% [f, P1_4, periodicity, pulse4] = calculateSSAmplitudeSpectrum(s4, frameRate, secLength);
-
 s5 = dataOut'*V(:,5);
-[pxx,f] = periodogram(s5,[],[], frameRate);
-[y,i] = max(pxx);
-pulse5 = 60 / f(i);
-% [f, P1_1, periodicity, pulse1] = calculateSSAmplitudeSpectrum(s1, frameRate, secLength);[f, P1_5, periodicity, pulse5] = calculateSSAmplitudeSpectrum(s5, frameRate, secLength);
+
+pulse = calculatePulse(s1, s2, s3, s4, s5, frameRate)
+
